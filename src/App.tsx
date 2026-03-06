@@ -259,7 +259,7 @@ export default function App() {
                 </label>
                 <input 
                   type="text" 
-                  name=""
+                  name="Opcional"
                   placeholder=""
                   value={formData.experience}
                   onChange={handleInputChange}
