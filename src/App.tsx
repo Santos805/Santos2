@@ -403,28 +403,30 @@ export default function App() {
             <div className="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <CheckCircle2 className="w-12 h-12 text-emerald-600" />
             </div>
-            <h2 className="text-4xl font-bold text-slate-900">¡Postulación Enviada!</h2>
-            <p className="text-lg text-slate-600">
-              Gracias por confiar en mí. Revisaré tu perfil y me pondré en contacto contigo pronto si hay una oportunidad que encaje con tu perfil.
+            <h2 className="text-4xl font-bold text-slate-900">¡Gracias por trabajar con nosotros!</h2>
+            <p className="text-xl text-slate-600 font-medium">
+              Espere el mensaje para seguir en el proceso.
             </p>
-            <button 
-              onClick={() => {
-                setStep('intro');
-                setFormData({
-                  fullName: '',
-                  email: '',
-                  specialty: '',
-                  experience: '',
-                  challenges: '',
-                  salary: '',
-                  whyMe: '',
-                });
-                setCvFile(null);
-              }}
-              className="px-8 py-3 bg-slate-900 text-white rounded-xl font-medium hover:bg-slate-800 transition-all"
-            >
-              Volver al inicio
-            </button>
+            <div className="pt-4">
+              <button 
+                onClick={() => {
+                  setStep('intro');
+                  setFormData({
+                    fullName: '',
+                    email: '',
+                    specialty: '',
+                    experience: '',
+                    challenges: '',
+                    salary: '',
+                    whyMe: '',
+                  });
+                  setCvFile(null);
+                }}
+                className="px-8 py-3 bg-indigo-600 text-white rounded-xl font-medium hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-100"
+              >
+                Volver al inicio
+              </button>
+            </div>
           </motion.div>
         );
     }
