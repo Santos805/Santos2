@@ -485,8 +485,8 @@ export default function App() {
           </div>
           <div className="flex gap-6 text-slate-400">
             <a href="#" className="hover:text-indigo-600 transition-colors">LinkedIn</a>
-            <a href="#" className="hover:text-indigo-600 transition-colors">Twitter</a>
-            <a href="#" className="hover:text-indigo-600 transition-colors">Instagram</a>
+            <a href="#" className="hover:text-indigo-600 transition-colors">X</a>
+            <a href="#" className="hover:text-indigo-600 transition-colors">IG</a>
           </div>
         </div>
       </footer>
