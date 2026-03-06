@@ -180,7 +180,7 @@ export default function App() {
           >
             <div className="space-y-2">
               <h2 className="text-3xl font-bold text-slate-900">Datos de contacto</h2>
-              <p className="text-slate-500">Cuéntame quién eres para poder contactarte.</p>
+              <p className="text-slate-500">Contanos quién sos para poder contactarte.</p>
             </div>
             
             <div className="space-y-4">
@@ -242,7 +242,7 @@ export default function App() {
             <div className="space-y-6">
               <div className="space-y-2">
                 <label className="text-sm font-semibold text-slate-700 flex items-center gap-2">
-                  <Briefcase className="w-4 h-4" /> 1. ¿Cuál es tu área de especialidad principal?
+                  <Briefcase className="w-4 h-4" /> 1. ¿En que puesto estas buscando trabajar?
                 </label>
                 <input 
                   type="text" 
@@ -256,12 +256,12 @@ export default function App() {
 
               <div className="space-y-2">
                 <label className="text-sm font-semibold text-slate-700 flex items-center gap-2">
-                  <Star className="w-4 h-4" /> 2. ¿Cuántos años de experiencia tienes en tu rubro?
+                  <Star className="w-4 h-4" /> 2. ¿Tenes disponibildiad full time o part time?
                 </label>
                 <input 
                   type="text" 
                   name="experience"
-                  placeholder="Ej: 5 años"
+                  placeholder=""
                   value={formData.experience}
                   onChange={handleInputChange}
                   className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
@@ -270,11 +270,11 @@ export default function App() {
 
               <div className="space-y-2">
                 <label className="text-sm font-semibold text-slate-700 flex items-center gap-2">
-                  <Target className="w-4 h-4" /> 3. ¿Qué tipo de desafíos buscas en tu próximo rol?
+                  <Target className="w-4 h-4" /> 3. ¿De que zona sos?
                 </label>
                 <textarea 
                   name="challenges"
-                  placeholder="Describe qué te motiva..."
+                  placeholder=""
                   value={formData.challenges}
                   onChange={handleInputChange}
                   rows={3}
@@ -289,7 +289,7 @@ export default function App() {
                 <input 
                   type="text" 
                   name="salary"
-                  placeholder="Ej: $3000 USD"
+                  placeholder=""
                   value={formData.salary}
                   onChange={handleInputChange}
                   className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
@@ -298,7 +298,7 @@ export default function App() {
 
               <div className="space-y-2">
                 <label className="text-sm font-semibold text-slate-700 flex items-center gap-2">
-                  <User className="w-4 h-4" /> 5. ¿Por qué crees que eres el candidato ideal?
+                  <User className="w-4 h-4" /> 5. Decime tres empresas en las que te gustaria trabajar
                 </label>
                 <textarea 
                   name="whyMe"
