@@ -263,7 +263,6 @@ export default function App() {
                   placeholder=""
                   value={formData.experience}
                   onChange={handleInputChange}
-            
                   className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
                 />
               </div>
@@ -396,8 +395,10 @@ export default function App() {
       case 'success':
         return (
           <motion.div 
+            key="success"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
             className="text-center space-y-6 max-w-md mx-auto py-12"
           >
             <div className="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -421,6 +422,7 @@ export default function App() {
                     whyMe: '',
                   });
                   setCvFile(null);
+                  setError(null);
                 }}
                 className="px-8 py-3 bg-indigo-600 text-white rounded-xl font-medium hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-100"
               >
