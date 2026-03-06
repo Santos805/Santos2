@@ -263,6 +263,7 @@ export default function App() {
                   placeholder=""
                   value={formData.experience}
                   onChange={handleInputChange}
+                  rows={3}
                   className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
                 />
               </div>
