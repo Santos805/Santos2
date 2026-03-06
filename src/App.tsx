@@ -247,7 +247,7 @@ export default function App() {
                 <input 
                   type="text" 
                   name="specialty"
-                  placeholder="Ej: Desarrollo Fullstack, Marketing Digital, etc."
+                  placeholder="Ej: Publicidad, Marketing Digital, etc."
                   value={formData.specialty}
                   onChange={handleInputChange}
                   className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
@@ -260,7 +260,7 @@ export default function App() {
                 </label>
                 <input 
                   type="text" 
-                  name="experience"
+                  name=""
                   placeholder=""
                   value={formData.experience}
                   onChange={handleInputChange}
@@ -302,7 +302,7 @@ export default function App() {
                 </label>
                 <textarea 
                   name="whyMe"
-                  placeholder="Dime qué te hace único..."
+                  placeholder="Por ejemplo Mercado libre"
                   value={formData.whyMe}
                   onChange={handleInputChange}
                   rows={3}
