@@ -158,14 +158,13 @@ export default function App() {
               Conectamos <span className="text-indigo-600">Talento Excepcional</span> con Empresas Líderes
             </h1>
             <p className="text-xl text-slate-600 leading-relaxed">
-              Soy tu Talent Connector. Mi misión es encontrar el lugar donde tu potencial brille. 
-              Carga tu CV y responde unas breves preguntas para comenzar.
+              TE FUISTES A LA B , QUEMASTE EL MONUMENTAL ESA MANCHA NO SE BORRA NUNCA MAS 
             </p>
             <button 
               onClick={() => setStep('info')}
               className="px-8 py-4 bg-indigo-600 text-white rounded-xl font-semibold text-lg hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-200 flex items-center gap-2 mx-auto"
             >
-              Comenzar Postulación <ChevronRight className="w-5 h-5" />
+              Comenzar <ChevronRight className="w-5 h-5" />
             </button>
           </motion.div>
         );
@@ -482,7 +481,7 @@ export default function App() {
       <footer className="border-top border-slate-100 py-12 px-6 bg-white">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="text-slate-400 text-sm">
-            © 2024 Talent Connector Hub. Todos los derechos reservados.
+            © 2024 Talent Connector. Todos los derechos reservados.
           </div>
           <div className="flex gap-6 text-slate-400">
             <a href="#" className="hover:text-indigo-600 transition-colors">LinkedIn</a>
