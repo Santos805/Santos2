@@ -27,7 +27,7 @@ import { SUBMISSION_URL } from './config';
  *         "Armar desde cero",
  *         data.fullName,
  *         data.email,
- *         "-", "-", "-", "-", "-", "-", "-" // Relleno para mantener columnas
+ *         "-", "-", "-", "-", "-", "-", "-", "-" // Relleno para mantener columnas
  *       ]);
  *       
  *       MailApp.sendEmail({
@@ -39,13 +39,14 @@ import { SUBMISSION_URL } from './config';
  *       });
  *     } else {
  *       // FLUJO: Optimizar CV
- *       // Columnas: Fecha | Tipo | Nombre | Email | Celular | Especialidad | Experiencia | Desafíos | Expectativa | Por qué | CV
+ *       // Columnas: Fecha | Tipo | Nombre | Email | Celular | Situación | Especialidad | Experiencia | Desafíos | Expectativa | Por qué | CV
  *       sheet.appendRow([
  *         new Date(),
  *         "Optimizar CV",
  *         data.fullName,
  *         data.email,
  *         "-",
+ *         data.employmentStatus,
  *         data.specialty,
  *         data.experience,
  *         data.challenges,
@@ -63,6 +64,7 @@ import { SUBMISSION_URL } from './config';
  *         body: "Se ha recibido una nueva postulación para optimizar.\n\n" +
  *               "Nombre: " + data.fullName + "\n" +
  *               "Email: " + data.email + "\n" +
+ *               "Situación Laboral: " + data.employmentStatus + "\n" +
  *               "Especialidad: " + data.specialty + "\n" +
  *               "Experiencia: " + data.experience + "\n" +
  *               "Desafíos: " + data.challenges + "\n" +
@@ -91,6 +93,7 @@ export default function App() {
     lastName: '',
     email: '',
     phone: '',
+    employmentStatus: '',
     specialty: '',
     experience: '',
     challenges: '',
@@ -380,6 +383,36 @@ export default function App() {
                   className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none transition-all resize-none"
                 />
               </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-semibold text-slate-700 flex items-center gap-2">
+                  <Briefcase className="w-4 h-4" /> 6. ¿Cuál es tu situación laboral actualmente?
+                </label>
+                <div className="space-y-2">
+                  <label className={`flex items-center gap-3 p-3 border rounded-xl cursor-pointer transition-all ${formData.employmentStatus === "Tiene trabajo y está en búsqueda activa para cambiar" ? 'border-indigo-500 bg-indigo-50' : 'border-slate-200 hover:bg-slate-50'}`}>
+                    <input 
+                      type="radio" 
+                      name="employmentStatus"
+                      value="Tiene trabajo y está en búsqueda activa para cambiar"
+                      checked={formData.employmentStatus === "Tiene trabajo y está en búsqueda activa para cambiar"}
+                      onChange={handleInputChange}
+                      className="w-4 h-4 text-indigo-600 focus:ring-indigo-500"
+                    />
+                    <span className="text-sm text-slate-600">Tiene trabajo y está en búsqueda activa para cambiar</span>
+                  </label>
+                  <label className={`flex items-center gap-3 p-3 border rounded-xl cursor-pointer transition-all ${formData.employmentStatus === "No tiene trabajo" ? 'border-indigo-500 bg-indigo-50' : 'border-slate-200 hover:bg-slate-50'}`}>
+                    <input 
+                      type="radio" 
+                      name="employmentStatus"
+                      value="No tiene trabajo"
+                      checked={formData.employmentStatus === "No tiene trabajo"}
+                      onChange={handleInputChange}
+                      className="w-4 h-4 text-indigo-600 focus:ring-indigo-500"
+                    />
+                    <span className="text-sm text-slate-600">No tiene trabajo</span>
+                  </label>
+                </div>
+              </div>
             </div>
 
             <div className="flex gap-3 pt-4">
@@ -390,7 +423,7 @@ export default function App() {
                 Volver
               </button>
               <button 
-                disabled={!formData.specialty || !formData.experience || !formData.challenges || !formData.whyMe}
+                disabled={!formData.specialty || !formData.experience || !formData.challenges || !formData.whyMe || !formData.employmentStatus}
                 onClick={() => setStep('cv')}
                 className="flex-1 px-6 py-3 bg-indigo-600 text-white rounded-xl font-medium hover:bg-indigo-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
