@@ -159,7 +159,7 @@ export default function App() {
               Conectamos <span className="text-indigo-600">Talento Excepcional</span> con Empresas Líderes
             </h1>
             <p className="text-xl text-slate-600 leading-relaxed">
-              TE FUISTES A LA B , QUEMASTE EL MONUMENTAL ESA MANCHA NO SE BORRA NUNCA MAS 
+              TALENT CONNECT 
             </p>
             <button 
               onClick={() => setStep('info')}
@@ -408,7 +408,7 @@ export default function App() {
             <div className="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <CheckCircle2 className="w-12 h-12 text-emerald-600" />
             </div>
-            <h2 className="text-4xl font-bold text-slate-900">¡Gracias por trabajar con nosotros!</h2>
+            <h2 className="text-4xl font-bold text-slate-900">Gracias por trabajar con nosotros!</h2>
             <p className="text-xl text-slate-600 font-medium">
               Espere el mensaje para seguir en el proceso.
             </p>
