@@ -16,42 +16,64 @@ import { SUBMISSION_URL } from './config';
  *     var data = JSON.parse(e.postData.contents);
  *     var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
  *     
- *     // Guardar en Google Sheets
- *     sheet.appendRow([
- *       new Date(),
- *       data.fullName,
- *       data.email,
- *       data.specialty,
- *       data.experience,
- *       data.challenges,
- *       data.salary,
- *       data.whyMe,
- *       data.cvName
- *     ]);
- *     
- *     // Enviar Email con el archivo
- *     var decodedFile = Utilities.base64Decode(data.cvBase64);
- *     var blob = Utilities.newBlob(decodedFile, data.cvType, data.cvName);
- *     
- *     MailApp.sendEmail({
- *       to: "TU_MAIL_AQUI@gmail.com", // CAMBIA ESTO POR TU MAIL
- *       subject: "Nuevo Candidato: " + data.fullName,
- *       body: "Se ha recibido una nueva postulación.\n\n" +
- *             "Nombre: " + data.fullName + "\n" +
- *             "Email: " + data.email + "\n" +
- *             "Especialidad: " + data.specialty + "\n" +
- *             "Experiencia: " + data.experience + "\n" +
- *             "Desafíos: " + data.challenges + "\n" +
- *             "Expectativa: " + data.salary + "\n" +
- *             "Por qué: " + data.whyMe + "\n",
- *       attachments: [blob]
- *     });
+ *     if (data.type === 'scratch') {
+ *       // Flujo: Armar CV desde cero
+ *       sheet.appendRow([
+ *         new Date(),
+ *         "Armar desde cero",
+ *         data.fullName + " " + data.lastName,
+ *         data.email,
+ *         data.phone,
+ *         "-", "-", "-", "-", "-", "-"
+ *       ]);
+ *       
+ *       MailApp.sendEmail({
+ *         to: "TU_MAIL_AQUI@gmail.com", // CAMBIA ESTO
+ *         subject: "Nuevo Pedido CV desde cero: " + data.fullName,
+ *         body: "Se ha solicitado armar un CV desde cero.\n\n" +
+ *               "Nombre: " + data.fullName + "\n" +
+ *               "Apellido: " + data.lastName + "\n" +
+ *               "Email: " + data.email + "\n" +
+ *               "Celular: " + data.phone + "\n"
+ *       });
+ *     } else {
+ *       // Flujo: Optimizar CV
+ *       sheet.appendRow([
+ *         new Date(),
+ *         "Optimizar CV",
+ *         data.fullName,
+ *         data.email,
+ *         "-",
+ *         data.specialty,
+ *         data.experience,
+ *         data.challenges,
+ *         data.salary,
+ *         data.whyMe,
+ *         data.cvName
+ *       ]);
+ *       
+ *       var decodedFile = Utilities.base64Decode(data.cvBase64);
+ *       var blob = Utilities.newBlob(decodedFile, data.cvType, data.cvName);
+ *       
+ *       MailApp.sendEmail({
+ *         to: "TU_MAIL_AQUI@gmail.com", // CAMBIA ESTO
+ *         subject: "Nueva Optimización de CV: " + data.fullName,
+ *         body: "Se ha recibido una nueva postulación para optimizar.\n\n" +
+ *               "Nombre: " + data.fullName + "\n" +
+ *               "Email: " + data.email + "\n" +
+ *               "Especialidad: " + data.specialty + "\n" +
+ *               "Experiencia: " + data.experience + "\n" +
+ *               "Desafíos: " + data.challenges + "\n" +
+ *               "Expectativa: " + data.salary + "\n" +
+ *               "Por qué: " + data.whyMe + "\n",
+ *         attachments: [blob]
+ *       });
+ *     }
  *     
  *     return ContentService.createTextOutput(JSON.stringify({ status: "success" }))
  *       .setMimeType(ContentService.MimeType.JSON);
- *       
- *   } catch (err) {
- *     return ContentService.createTextOutput(JSON.stringify({ status: "error", message: err.toString() }))
+ *   } catch (f) {
+ *     return ContentService.createTextOutput(JSON.stringify({ status: "error", error: f.toString() }))
  *       .setMimeType(ContentService.MimeType.JSON);
  *   }
  * }
@@ -117,6 +139,7 @@ export default function App() {
       const cvBase64 = await toBase64(cvFile);
       
       const payload = {
+        type: 'optimize',
         ...formData,
         cvBase64,
         cvName: cvFile.name,
@@ -202,13 +225,13 @@ export default function App() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <button 
                 onClick={() => setStep('scratch')}
-                className="w-full sm:w-auto px-8 py-4 bg-indigo-600 text-white rounded-xl font-semibold text-lg hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-200 flex items-center justify-center gap-2"
+                className="w-full sm:w-auto px-8 py-4 bg-orange-100 text-orange-800 border-2 border-orange-200 rounded-xl font-semibold text-lg hover:bg-orange-200 transition-all flex items-center justify-center gap-2"
               >
                 Armar CV desde cero
               </button>
               <button 
                 onClick={() => setStep('info')}
-                className="w-full sm:w-auto px-8 py-4 border-2 border-slate-200 text-slate-700 rounded-xl font-semibold text-lg hover:bg-slate-50 transition-all flex items-center justify-center gap-2"
+                className="w-full sm:w-auto px-8 py-4 bg-blue-600 text-white rounded-xl font-semibold text-lg hover:bg-blue-700 transition-all shadow-lg shadow-blue-200 flex items-center justify-center gap-2"
               >
                 Optimizar mi CV
               </button>
