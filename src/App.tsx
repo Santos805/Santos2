@@ -5,7 +5,7 @@
 
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Upload, CheckCircle2, ChevronRight, ChevronLeft, FileText, Send, User, Mail, Briefcase, Target, DollarSign, Star, Loader2 } from 'lucide-react';
+import { Upload, CheckCircle2, ChevronRight, ChevronLeft, FileText, Send, User, Mail, Briefcase, Target, DollarSign, Star, Loader2, Phone } from 'lucide-react';
 import { SUBMISSION_URL } from './config';
 
 /**
@@ -57,14 +57,16 @@ import { SUBMISSION_URL } from './config';
  * }
  */
 
-type Step = 'intro' | 'info' | 'questions' | 'cv' | 'success';
+type Step = 'intro' | 'info' | 'questions' | 'cv' | 'success' | 'scratch' | 'scratch_success';
 
 export default function App() {
   const [step, setStep] = useState<Step>('intro');
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     fullName: '',
+    lastName: '',
     email: '',
+    phone: '',
     specialty: '',
     experience: '',
     challenges: '',
@@ -141,6 +143,42 @@ export default function App() {
     }
   };
 
+  const handleScratchSubmit = async () => {
+    if (!formData.fullName || !formData.lastName || !formData.email || !formData.phone) {
+      setError('Por favor, completa todos los campos');
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const payload = {
+        type: 'scratch',
+        fullName: formData.fullName,
+        lastName: formData.lastName,
+        email: formData.email,
+        phone: formData.phone,
+      };
+
+      await fetch(SUBMISSION_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'text/plain',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      setStep('scratch_success');
+    } catch (err) {
+      console.error(err);
+      setError('Hubo un problema al enviar tus datos.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const renderStep = () => {
     switch (step) {
       case 'intro':
@@ -161,12 +199,20 @@ export default function App() {
             <p className="text-xl text-slate-600 leading-relaxed">
               TALENT CONNECT 
             </p>
-            <button 
-              onClick={() => setStep('info')}
-              className="px-8 py-4 bg-indigo-600 text-white rounded-xl font-semibold text-lg hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-200 flex items-center gap-2 mx-auto"
-            >
-              Comenzar <ChevronRight className="w-5 h-5" />
-            </button>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <button 
+                onClick={() => setStep('scratch')}
+                className="w-full sm:w-auto px-8 py-4 bg-indigo-600 text-white rounded-xl font-semibold text-lg hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-200 flex items-center justify-center gap-2"
+              >
+                Armar CV desde cero
+              </button>
+              <button 
+                onClick={() => setStep('info')}
+                className="w-full sm:w-auto px-8 py-4 border-2 border-slate-200 text-slate-700 rounded-xl font-semibold text-lg hover:bg-slate-50 transition-all flex items-center justify-center gap-2"
+              >
+                Optimizar mi CV
+              </button>
+            </div>
           </motion.div>
         );
 
@@ -391,6 +437,131 @@ export default function App() {
               >
                 {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Send className="w-5 h-5" />}
                 {loading ? 'Enviando...' : 'Enviar Postulación'}
+              </button>
+            </div>
+          </motion.div>
+        );
+
+      case 'scratch':
+        return (
+          <motion.div 
+            key="scratch"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            className="space-y-6 max-w-md mx-auto"
+          >
+            <div className="space-y-2">
+              <h2 className="text-3xl font-bold text-slate-900">Armar CV desde cero</h2>
+              <p className="text-slate-500">Completa tus datos para que podamos ayudarte.</p>
+            </div>
+            
+            <div className="space-y-4">
+              <div className="relative">
+                <User className="absolute left-3 top-3.5 w-5 h-5 text-slate-400" />
+                <input 
+                  type="text" 
+                  name="fullName"
+                  placeholder="Nombre"
+                  value={formData.fullName}
+                  onChange={handleInputChange}
+                  className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
+                />
+              </div>
+              <div className="relative">
+                <User className="absolute left-3 top-3.5 w-5 h-5 text-slate-400" />
+                <input 
+                  type="text" 
+                  name="lastName"
+                  placeholder="Apellido"
+                  value={formData.lastName}
+                  onChange={handleInputChange}
+                  className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
+                />
+              </div>
+              <div className="relative">
+                <Mail className="absolute left-3 top-3.5 w-5 h-5 text-slate-400" />
+                <input 
+                  type="email" 
+                  name="email"
+                  placeholder="Mail"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
+                />
+              </div>
+              <div className="relative">
+                <Phone className="absolute left-3 top-3.5 w-5 h-5 text-slate-400" />
+                <input 
+                  type="tel" 
+                  name="phone"
+                  placeholder="Celular"
+                  value={formData.phone}
+                  onChange={handleInputChange}
+                  className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
+                />
+              </div>
+            </div>
+
+            {error && (
+              <p className="text-red-500 text-sm text-center font-medium">{error}</p>
+            )}
+
+            <div className="flex gap-3 pt-4">
+              <button 
+                onClick={() => setStep('intro')}
+                className="flex-1 px-6 py-3 border border-slate-200 text-slate-600 rounded-xl font-medium hover:bg-slate-50 transition-all"
+              >
+                Volver
+              </button>
+              <button 
+                disabled={loading || !formData.fullName || !formData.lastName || !formData.email || !formData.phone}
+                onClick={handleScratchSubmit}
+                className="flex-1 px-6 py-3 bg-indigo-600 text-white rounded-xl font-medium hover:bg-indigo-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              >
+                {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Send className="w-5 h-5" />}
+                {loading ? 'Enviando...' : 'Enviar'}
+              </button>
+            </div>
+          </motion.div>
+        );
+
+      case 'scratch_success':
+        return (
+          <motion.div 
+            key="scratch_success"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            className="text-center space-y-6 max-w-md mx-auto py-12"
+          >
+            <div className="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <CheckCircle2 className="w-12 h-12 text-emerald-600" />
+            </div>
+            <h2 className="text-4xl font-bold text-slate-900">¡Gracias por contactarnos!</h2>
+            <p className="text-xl text-slate-600 font-medium">
+              Nos ponemos en acción para armar tu CV, estate atento.
+            </p>
+            <div className="pt-4">
+              <button 
+                onClick={() => {
+                  setStep('intro');
+                  setFormData({
+                    fullName: '',
+                    lastName: '',
+                    email: '',
+                    phone: '',
+                    specialty: '',
+                    experience: '',
+                    challenges: '',
+                    salary: '',
+                    whyMe: '',
+                  });
+                  setError(null);
+                }}
+                className="px-8 py-3 bg-indigo-600 text-white rounded-xl font-medium hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-100"
+              >
+                Volver al inicio
               </button>
             </div>
           </motion.div>
