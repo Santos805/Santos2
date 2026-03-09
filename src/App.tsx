@@ -16,28 +16,30 @@ import { SUBMISSION_URL } from './config';
  *     var data = JSON.parse(e.postData.contents);
  *     var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
  *     
+ *     // Log para depuración (opcional)
+ *     console.log("Datos recibidos: " + JSON.stringify(data));
+ *     
  *     if (data.type === 'scratch') {
- *       // Flujo: Armar CV desde cero
+ *       // FLUJO: Armar CV desde cero
+ *       // Columnas: Fecha | Tipo | Nombre Completo | Email
  *       sheet.appendRow([
  *         new Date(),
  *         "Armar desde cero",
- *         data.fullName + " " + data.lastName,
+ *         data.fullName,
  *         data.email,
- *         data.phone,
- *         "-", "-", "-", "-", "-", "-"
+ *         "-", "-", "-", "-", "-", "-", "-" // Relleno para mantener columnas
  *       ]);
  *       
  *       MailApp.sendEmail({
- *         to: "TU_MAIL_AQUI@gmail.com", // CAMBIA ESTO
+ *         to: "TU_MAIL_AQUI@gmail.com", // <--- CAMBIA ESTO
  *         subject: "Nuevo Pedido CV desde cero: " + data.fullName,
  *         body: "Se ha solicitado armar un CV desde cero.\n\n" +
- *               "Nombre: " + data.fullName + "\n" +
- *               "Apellido: " + data.lastName + "\n" +
- *               "Email: " + data.email + "\n" +
- *               "Celular: " + data.phone + "\n"
+ *               "Nombre y Apellido: " + data.fullName + "\n" +
+ *               "Email: " + data.email + "\n"
  *       });
  *     } else {
- *       // Flujo: Optimizar CV
+ *       // FLUJO: Optimizar CV
+ *       // Columnas: Fecha | Tipo | Nombre | Email | Celular | Especialidad | Experiencia | Desafíos | Expectativa | Por qué | CV
  *       sheet.appendRow([
  *         new Date(),
  *         "Optimizar CV",
@@ -56,7 +58,7 @@ import { SUBMISSION_URL } from './config';
  *       var blob = Utilities.newBlob(decodedFile, data.cvType, data.cvName);
  *       
  *       MailApp.sendEmail({
- *         to: "TU_MAIL_AQUI@gmail.com", // CAMBIA ESTO
+ *         to: "TU_MAIL_AQUI@gmail.com", // <--- CAMBIA ESTO
  *         subject: "Nueva Optimización de CV: " + data.fullName,
  *         body: "Se ha recibido una nueva postulación para optimizar.\n\n" +
  *               "Nombre: " + data.fullName + "\n" +
@@ -167,7 +169,7 @@ export default function App() {
   };
 
   const handleScratchSubmit = async () => {
-    if (!formData.fullName || !formData.lastName || !formData.email || !formData.phone) {
+    if (!formData.fullName || !formData.email) {
       setError('Por favor, completa todos los campos');
       return;
     }
@@ -179,9 +181,7 @@ export default function App() {
       const payload = {
         type: 'scratch',
         fullName: formData.fullName,
-        lastName: formData.lastName,
         email: formData.email,
-        phone: formData.phone,
       };
 
       await fetch(SUBMISSION_URL, {
@@ -485,19 +485,8 @@ export default function App() {
                 <input 
                   type="text" 
                   name="fullName"
-                  placeholder="Nombre"
+                  placeholder="Nombre y Apellido"
                   value={formData.fullName}
-                  onChange={handleInputChange}
-                  className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
-                />
-              </div>
-              <div className="relative">
-                <User className="absolute left-3 top-3.5 w-5 h-5 text-slate-400" />
-                <input 
-                  type="text" 
-                  name="lastName"
-                  placeholder="Apellido"
-                  value={formData.lastName}
                   onChange={handleInputChange}
                   className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
                 />
@@ -509,17 +498,6 @@ export default function App() {
                   name="email"
                   placeholder="Mail"
                   value={formData.email}
-                  onChange={handleInputChange}
-                  className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
-                />
-              </div>
-              <div className="relative">
-                <Phone className="absolute left-3 top-3.5 w-5 h-5 text-slate-400" />
-                <input 
-                  type="tel" 
-                  name="phone"
-                  placeholder="Celular"
-                  value={formData.phone}
                   onChange={handleInputChange}
                   className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
                 />
@@ -538,9 +516,9 @@ export default function App() {
                 Volver
               </button>
               <button 
-                disabled={loading || !formData.fullName || !formData.lastName || !formData.email || !formData.phone}
+                disabled={loading || !formData.fullName || !formData.email}
                 onClick={handleScratchSubmit}
-                className="flex-1 px-6 py-3 bg-indigo-600 text-white rounded-xl font-medium hover:bg-indigo-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="flex-1 px-6 py-3 bg-orange-500 text-white rounded-xl font-medium hover:bg-orange-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Send className="w-5 h-5" />}
                 {loading ? 'Enviando...' : 'Enviar'}
