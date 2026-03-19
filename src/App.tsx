@@ -31,7 +31,7 @@ import { SUBMISSION_URL } from './config';
  *       ]);
  *       
  *       MailApp.sendEmail({
- *         to: "TU_MAIL_AQUI@gmail.com", // <--- CAMBIA ESTO
+ *         to: "empleos.nexo@gmail.com", // <--- CAMBIA ESTO
  *         subject: "Nuevo Pedido CV desde cero: " + data.fullName,
  *         body: "Se ha solicitado armar un CV desde cero.\n\n" +
  *               "Nombre y Apellido: " + data.fullName + "\n" +
@@ -59,7 +59,7 @@ import { SUBMISSION_URL } from './config';
  *       var blob = Utilities.newBlob(decodedFile, data.cvType, data.cvName);
  *       
  *       MailApp.sendEmail({
- *         to: "TU_MAIL_AQUI@gmail.com", // <--- CAMBIA ESTO
+ *         to: "empleos.nexo@gmail.com", // <--- CAMBIA ESTO
  *         subject: "Nueva Optimización de CV: " + data.fullName,
  *         body: "Se ha recibido una nueva postulación para optimizar.\n\n" +
  *               "Nombre: " + data.fullName + "\n" +
@@ -205,6 +205,16 @@ export default function App() {
     }
   };
 
+  const handleDownload = () => {
+    const link = document.createElement('a');
+    // Reemplaza esta URL con la de tu imagen
+    link.href = 'https://picsum.photos/seed/talent/1200/800';
+    link.download = 'como-funciona.jpg';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   const renderStep = () => {
     switch (step) {
       case 'intro':
@@ -220,10 +230,10 @@ export default function App() {
               <Briefcase className="w-8 h-8 text-indigo-600" />
             </div>
             <h1 className="text-5xl font-bold tracking-tight text-slate-900 leading-tight">
-              Conectamos <span className="text-indigo-600">Talento Excepcional</span> con Empresas Líderes
+              Conectamos <span className="text-indigo-600">Talento</span> con Empresas Líderes
             </h1>
             <p className="text-xl text-slate-600 leading-relaxed">
-              TALENT CONNECT 
+              nexo
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <button 
@@ -653,7 +663,12 @@ export default function App() {
             Talent Connector
           </div>
           <div className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-500">
-            <span className="hover:text-indigo-600 cursor-pointer">Cómo funciona</span>
+            <span 
+              onClick={handleDownload}
+              className="hover:text-indigo-600 cursor-pointer"
+            >
+              Cómo funciona
+            </span>
             <span className="hover:text-indigo-600 cursor-pointer">Empresas</span>
             <span className="hover:text-indigo-600 cursor-pointer">Contacto</span>
           </div>
