@@ -207,9 +207,9 @@ export default function App() {
 
   const handleDownload = () => {
     const link = document.createElement('a');
-    // Reemplaza esta URL con la de tu imagen
-    link.href = 'https://picsum.photos/seed/talent/1200/800';
-    link.download = 'como-funciona.jpg';
+    // Esta ruta apunta a la carpeta 'public' de tu proyecto
+    link.href = '/Comofunciona.jpg.png';
+    link.download = 'como-funciona.png';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
