@@ -31,7 +31,7 @@ import { SUBMISSION_URL } from './config';
  *       ]);
  *       
  *       MailApp.sendEmail({
- *         to: "empleos.nexo@gmail.com", // <--- CAMBIA ESTO
+ *         to: "TU_MAIL_AQUI@gmail.com", // <--- CAMBIA ESTO
  *         subject: "Nuevo Pedido CV desde cero: " + data.fullName,
  *         body: "Se ha solicitado armar un CV desde cero.\n\n" +
  *               "Nombre y Apellido: " + data.fullName + "\n" +
@@ -59,7 +59,7 @@ import { SUBMISSION_URL } from './config';
  *       var blob = Utilities.newBlob(decodedFile, data.cvType, data.cvName);
  *       
  *       MailApp.sendEmail({
- *         to: "empleos.nexo@gmail.com", // <--- CAMBIA ESTO
+ *         to: "TU_MAIL_AQUI@gmail.com", // <--- CAMBIA ESTO
  *         subject: "Nueva Optimización de CV: " + data.fullName,
  *         body: "Se ha recibido una nueva postulación para optimizar.\n\n" +
  *               "Nombre: " + data.fullName + "\n" +
