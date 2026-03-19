@@ -205,16 +205,6 @@ export default function App() {
     }
   };
 
-  const handleDownload = () => {
-    const link = document.createElement('a');
-    // Esta ruta apunta a la carpeta 'public' de tu proyecto
-    link.href = '/Comofunciona.jpg.png';
-    link.download = 'como-funciona.png';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
   const renderStep = () => {
     switch (step) {
       case 'intro':
@@ -230,10 +220,10 @@ export default function App() {
               <Briefcase className="w-8 h-8 text-indigo-600" />
             </div>
             <h1 className="text-5xl font-bold tracking-tight text-slate-900 leading-tight">
-              Conectamos <span className="text-indigo-600">Talento</span> con Empresas Líderes
+              Conectamos <span className="text-indigo-600">Talento Excepcional</span> con Empresas Líderes
             </h1>
             <p className="text-xl text-slate-600 leading-relaxed">
-              nexo
+              TALENT CONNECT 
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <button 
@@ -663,12 +653,7 @@ export default function App() {
             Talent Connector
           </div>
           <div className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-500">
-            <span 
-              onClick={handleDownload}
-              className="hover:text-indigo-600 cursor-pointer"
-            >
-              Cómo funciona
-            </span>
+            <span className="hover:text-indigo-600 cursor-pointer">Cómo funciona</span>
             <span className="hover:text-indigo-600 cursor-pointer">Empresas</span>
             <span className="hover:text-indigo-600 cursor-pointer">Contacto</span>
           </div>
