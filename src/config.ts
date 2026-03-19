@@ -11,4 +11,4 @@
  * 5. Copia la URL generada y pégala aquí abajo.
  */
 
-export const SUBMISSION_URL = "https://script.google.com/macros/s/AKfycbzzBty6LtO713I53vHtKquu8KIKThtwbXZnLEvxc9J4gDTvbiV05CW-I2eX1uzLnCpBog/exec";
+export const SUBMISSION_URL = https://script.google.com/macros/s/AKfycbzkehWkqFZyQSKp3rf7A4u80vE65--1ejltkJoUrJFBq8ObUANNdum8ulUK57y3lN-2Qw/exec";
